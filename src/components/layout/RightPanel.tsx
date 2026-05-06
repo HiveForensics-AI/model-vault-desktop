@@ -1,4 +1,5 @@
 import React from 'react';
+import { mockModels } from '@/lib/mockData';
 
 export default function RightPanel() {
   return (
@@ -7,9 +8,13 @@ export default function RightPanel() {
         <section className="glass rounded-2xl p-4">
           <h3 className="font-semibold mb-3">DOWNLOADS</h3>
           <div className="space-y-3 text-sm">
-            {['Coding Mistral 7B Q4', 'DeepSeek Coder 6.7B', 'Qwen2 7B Instruct Q5'].map((n, i) => (
-              <div key={n} className="rounded-xl bg-slate-900/60 p-3 border border-border/40">
-                <p>{n}</p><p className="text-muted text-xs mt-1">{[68, 32, 0][i]}%</p>
+            {mockModels.slice(0, 3).map((m, i) => (
+              <div key={m.id} className="rounded-xl bg-slate-900/60 p-3 border border-border/40 flex gap-3 items-center">
+                <img src={m.imageUrl} alt={m.name} className="h-12 w-12 rounded-lg object-cover" />
+                <div className="flex-1 min-w-0">
+                  <p className="truncate">{m.name}</p>
+                  <p className="text-muted text-xs mt-1">{[68, 32, 0][i]}%</p>
+                </div>
               </div>
             ))}
           </div>
