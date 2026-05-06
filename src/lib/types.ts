@@ -26,6 +26,8 @@ export interface ModelSummary {
   trustLevel: 'unverified' | 'hash_verified' | 'signed' | 'verified_creator';
   compatibility: CompatibilityLevel;
   tags: string[];
+  imageUrl?: string;
+  creatorAvatarUrl?: string;
 }
 
 export interface ModelDetail extends ModelSummary {
