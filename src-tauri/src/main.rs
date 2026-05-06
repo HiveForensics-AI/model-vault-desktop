@@ -18,6 +18,8 @@ fn sanitize_linux_runtime_env() {
 #[cfg(target_os = "linux")]
 fn is_snap_runtime_library_path(path: &std::path::Path) -> bool {
     let normalized = path.to_string_lossy().replace("\\", "/");
+    let normalized = normalized.trim_end_matches('/');
+
     normalized.starts_with("/snap/")
         && normalized.ends_with("/lib/x86_64-linux-gnu")
         && normalized.contains("/current/")
