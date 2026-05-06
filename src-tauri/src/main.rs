@@ -4,6 +4,7 @@
 fn sanitize_linux_runtime_env() {
     sanitize_colon_delimited_path_var("LD_LIBRARY_PATH");
     sanitize_preload_var();
+    sanitize_snap_specific_env_vars();
 }
 
 #[cfg(target_os = "linux")]
@@ -45,16 +46,41 @@ fn sanitize_preload_var() {
 fn is_snap_runtime_library_path(path: &std::path::Path) -> bool {
     let normalized = path.to_string_lossy().replace("\\", "/");
     let normalized = normalized.trim_end_matches('/');
-
     normalized.starts_with("/snap/")
-        && normalized.ends_with("/lib/x86_64-linux-gnu")
-        && normalized.contains("/current/")
 }
 
 #[cfg(target_os = "linux")]
 fn is_snap_runtime_library_entry(entry: &str) -> bool {
     let normalized = entry.replace("\\", "/");
     normalized.starts_with("/snap/")
+}
+
+#[cfg(target_os = "linux")]
+fn sanitize_snap_specific_env_vars() {
+    for var_name in [
+        "GTK_PATH",
+        "GTK_EXE_PREFIX",
+        "GDK_PIXBUF_MODULE_FILE",
+        "GIO_MODULE_DIR",
+        "SNAP",
+        "SNAP_ARCH",
+        "SNAP_COMMON",
+        "SNAP_CONTEXT",
+        "SNAP_COOKIE",
+        "SNAP_DATA",
+        "SNAP_INSTANCE_KEY",
+        "SNAP_INSTANCE_NAME",
+        "SNAP_LIBRARY_PATH",
+        "SNAP_NAME",
+        "SNAP_REAL_HOME",
+        "SNAP_REEXEC",
+        "SNAP_REVISION",
+        "SNAP_USER_COMMON",
+        "SNAP_USER_DATA",
+        "SNAP_VERSION",
+    ] {
+        std::env::remove_var(var_name);
+    }
 }
 
 fn main() {
