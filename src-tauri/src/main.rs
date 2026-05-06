@@ -27,10 +27,11 @@ fn sanitize_preload_var() {
         return;
     };
 
-    let filtered = current
-        .to_string_lossy()
+    let preload = current.to_string_lossy();
+    let filtered = preload
         .split_ascii_whitespace()
         .filter(|entry| !is_snap_runtime_library_entry(entry))
+        .map(str::to_owned)
         .collect::<Vec<_>>();
 
     if filtered.is_empty() {
