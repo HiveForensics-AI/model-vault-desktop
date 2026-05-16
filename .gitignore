@@ -1,13 +1,38 @@
+# Dependencies
 node_modules/
+
+# Frontend build output
 dist/
 build/
+coverage/
+
+# Tauri / Rust build output
+target/
+src-tauri/target/
+src-tauri/gen/
+
+# Environment files
 .env
+.env.*
+!.env.example
+
+# OS junk
 .DS_Store
-*.log
+Thumbs.db
+
+# Editor settings
 .idea/
 .vscode/
-coverage/
+
+# Logs and caches
+*.log
+*.cache
 *.tsbuildinfo
+*.eslintcache
+*.prettiercache
+*.tscache
+
+# Temp and archive files
 *.bak
 *.tmp
 *.swp
@@ -15,8 +40,3 @@ coverage/
 *.zip
 *.tar.gz
 *.tgz
-*.log
-*.cache
-*.eslintcache
-*.prettiercache
-*.tscache   
